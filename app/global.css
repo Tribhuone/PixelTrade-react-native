@@ -1,0 +1,28 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .text-primary {
+    color: #207B20;
+  }
+
+  .little-text{
+    color:#3e893e;
+  }
+
+  .btn-primary{
+    background-color: #FFE45B;
+  }
+
+  .navigate-btn{
+    background-color: #227922;
+  }
+}
+
+@layer utilities {
+  .will-change-transform {
+    will-change: transform;
+  }
+}
