@@ -1,10 +1,10 @@
 
 import { View, Text, ScrollView, Image, Pressable, Alert } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
 import { clearCart, removeCart } from "@/store/slices/cartSlice";
-import { useRouter } from 'expo-router';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import * as WebBrowser from 'expo-web-browser';
+import { useSelector, useDispatch } from 'react-redux';
+import RazorpayCheckout from 'react-native-razorpay';
+import { useRouter } from 'expo-router';
 import axios from 'axios';
 
 export default function CartScreen() {
@@ -45,16 +45,69 @@ export default function CartScreen() {
                     }
                 }
             );
+            const resData = response.data;
 
-            const session = response.data;
-            if (session.url) {
-                await WebBrowser.openBrowserAsync(session.url);
-            } else {
-                console.error("Session URL missing:", session);
-                Alert.alert("Error", "Could not initiate payment. Server response invalid.");
+            const options = {
+                description: 'Credits towards consultation',
+                image: '/assets/images/icon.png',
+                currency: 'INR',
+                key: process.env.EXPO_PUBLIC_RAZOR_API_KEY,
+                amount: Number(resData.amount),
+                order_id: resData.id,
+                name: 'PixelTrade',
+                prefill: {
+                    email: user.user.email,
+                    contact: user.user.phone,
+                    name: user.user.name
+                },
+                theme: { color: '#227922' }
             }
+            RazorpayCheckout.open(options)
+                .then(async (data) => {
+                    try {
+                        // 1️⃣ Store ordered products
+                        // console.log("Enter payment");
+                        await axios.post(
+                            `${process.env.EXPO_PUBLIC_ORDER_API_URL}/api/order/ordered-products`,
+                            cartList,
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${user.token}`,
+                                    "Content-Type": "application/json"
+                                }
+                            }
+                        );
+                        // console.log("data added in database!");
+                        dispatch(clearCart());
+
+                        Alert.alert(
+                            "Payment Successful 🎉",
+                            "Your payment is complete. Your purchased photos are now available."
+                        );
+
+                        // optional navigation
+                        // router.push("/orders");
+
+                    } catch (err) {
+                        // console.log("Order Store Error:", err);
+
+                        Alert.alert(
+                            "Payment Done, Order Failed",
+                            "Payment was successful, but we couldn't save your order. Please contact support."
+                        );
+                    }
+                }).catch((error) => {
+                    if (error.code === 2) {
+                        Alert.alert("Payment Cancelled", "You cancelled the payment");
+                    } else {
+                        Alert.alert(
+                            "Payment Failed",
+                            "Something went wrong"
+                        );
+                    }
+                });
         } catch (error: any) {
-            console.error("Checkout Error:", error);
+            // console.error("Checkout Error:", error);
             const msg = error.response?.data?.message || "Checkout failed. Please try again.";
             Alert.alert("Error", msg);
         }
