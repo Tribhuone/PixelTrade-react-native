@@ -53,7 +53,7 @@ export default function ProfileScreen() {
         } else {
             fetchData();
         }
-    }, [viewMode, token]);
+    }, [viewMode]);
 
     const fetchData = async () => {
         setLoading(true);

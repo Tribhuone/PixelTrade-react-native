@@ -20,29 +20,29 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'gray' }} edges={['top']}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                {/* <Stack.Screen
+    // <SafeAreaProvider style={{ flex: 1, backgroundColor: 'gray' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'gray' }} edges={['top']}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              {/* <Stack.Screen
                   name="modal"
                   options={{ presentation: 'modal', title: 'Modal' }}
                 /> */}
-              </Stack>
+            </Stack>
 
-              {/* StatusBar fix */}
-              <StatusBar
-                style={colorScheme === 'dark' ? 'light' : 'dark'}
-                translucent
-                backgroundColor="transparent"
-              />
-            </ThemeProvider>
-          </PersistGate>
-        </Provider>
-      </SafeAreaView>
-    </SafeAreaProvider>
+            {/* StatusBar fix */}
+            <StatusBar
+              style={colorScheme === 'dark' ? 'light' : 'dark'}
+              translucent
+              backgroundColor="transparent"
+            />
+          </ThemeProvider>
+        </PersistGate>
+      </Provider>
+    </SafeAreaView>
+    // </SafeAreaProvider>
   );
 }

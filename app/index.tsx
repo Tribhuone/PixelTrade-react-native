@@ -1,5 +1,6 @@
 
 import { View, Image, ActivityIndicator, Text } from "react-native";
+import { verticalScale, scale } from 'react-native-size-matters';
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
@@ -28,12 +29,13 @@ export default function Splash() {
             alignItems: "center",
             backgroundColor: "#fff"
         }}>
-            <Text style={{ fontSize: 24, fontWeight: "bold", color: "#227922", marginBottom: 5 }}>
-                Pixel Trade
-            </Text>
             <Image
-                source={require("../assets/images/favicon.png")}
-                style={{ width: 120, height: 120 }}
+                source={require("../assets/images/landing-logo.png")}
+                style={{
+                    width: scale(300),
+                    height: verticalScale(300),
+                    objectFit: "contain",
+                }}
             />
 
             <ActivityIndicator size="large" color="#227922" style={{ marginTop: 20 }} />

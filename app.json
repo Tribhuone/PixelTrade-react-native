@@ -4,19 +4,19 @@
     "slug": "pixeltrade",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/pixeltrade-logo.png",
     "scheme": "pixeltrade",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "icon": "./assets/images/icon.png"
+      "icon": "./assets/images/pixeltrade-logo.png"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#207B20",
-        "foregroundImage": "./assets/images/icon.png",
-        "monochromeImage": "./assets/images/icon.png",
+        "foregroundImage": "./assets/images/pixeltrade-logo.png",
+        "monochromeImage": "./assets/images/pixeltrade-logo.png",
         "versionCode": 1
       },
       "edgeToEdgeEnabled": true,
@@ -26,14 +26,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/pixeltrade-logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/pixeltrade-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
